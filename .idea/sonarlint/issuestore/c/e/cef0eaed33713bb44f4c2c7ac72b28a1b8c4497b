@@ -1,0 +1,23 @@
+
+e
+java:S1192L"HDefine a constant instead of duplicating this literal "mensaje" 3 times.(Ò‡µ8£µ©1
+_
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ8¾¤ÇÊ1
+C
+java:S1452"&Remove usage of generic wildcard type.(íÜëá8Â£µ©1
+H
+java:S1452$"&Remove usage of generic wildcard type.(ÿÈÕÔøÿÿÿÿ8Ä£µ©1
+B
+java:S1452-"&Remove usage of generic wildcard type.(êé‡	8Å£µ©1
+H
+java:S1452<"&Remove usage of generic wildcard type.(”øÈ»şÿÿÿÿ8È£µ©1
+B
+java:S1452F"&Remove usage of generic wildcard type.(ŠœÚg8Ë£µ©1
+H
+java:S1452V"&Remove usage of generic wildcard type.(—Šûîúÿÿÿÿ8Ï£µ©1
+C
+java:S1452f"&Remove usage of generic wildcard type.(˜¡ĞŠ8Ó£µ©1
+C
+java:S1452v"&Remove usage of generic wildcard type.(—€™½8×£µ©1
+I
+java:S1602}",Remove useless curly braces around statement(¡âÚä8Û£µ©1

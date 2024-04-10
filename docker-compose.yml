@@ -1,0 +1,91 @@
+version: "3.8"
+services:
+# BASE DE DATOS
+  mysql8:
+    container_name: mysql8
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: tarah723
+      MYSQL_DATABASE: msvc_usuarios
+    volumes:
+      - data-mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - curso_kubernetes
+
+  postgres14:
+    container_name: postgres14
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: tarah723
+      POSTGRES_DB: msvc_cursos
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - curso_kubernetes
+# MICRO SERVICIOS
+  msvc-usuarios:
+    container_name: msvc-usuarios
+    # imagen desde un repositorio de docker hub
+    image: rgmcove/usuarios:latest
+    # imagen desde el dockerfile
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-usuarios/Dockerfile
+  # cuando ya existe la imagen
+    #image: usuarios:latest
+    ports:
+      - "8001:8001"
+    environment:
+      PORT: 8001
+      DB_HOST: mysql8:3306
+      DB_DATABASE: msvc_usuarios
+      DB_USERNAME: root
+      DB_PASSWORD: tarah723
+      CURSOS_URL: msvc-cursos:8002
+    networks:
+      - curso_kubernetes
+    depends_on:
+      - mysql8
+    restart: always
+  msvc-cursos:
+    container_name: msvc-cursos
+    # imagen desde un repositorio de docker hub
+    image: rgmcove/cursos:latest
+    # imagen desde el dockerfile
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-cursos/Dockerfile
+  # cuando ya existe la imagen
+    #image: cursos:latest
+    ports:
+      - "8002:8002"
+    environment:
+      PORT: 8002
+      DB_HOST: postgres14:5432
+      DB_DATABASE: msvc_cursos
+      DB_USERNAME: postgres
+      DB_PASSWORD: tarah723
+      USUARIOS_URL: msvc-usuarios:8001
+    networks:
+      - curso_kubernetes
+    depends_on:
+      - postgres14
+      - msvc-usuarios
+    restart: always
+#VOLUMENES
+volumes:
+  data-mysql:
+    name: data-mysql
+  data-postgres:
+    name: data-postgres
+# REDES
+networks:
+  curso_kubernetes:
+    name: curso_kubernetes
+    external: true
