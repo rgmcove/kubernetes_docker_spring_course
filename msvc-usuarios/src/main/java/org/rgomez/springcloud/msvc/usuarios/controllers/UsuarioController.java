@@ -3,6 +3,9 @@ package org.rgomez.springcloud.msvc.usuarios.controllers;
 import jakarta.validation.Valid;
 import org.rgomez.springcloud.msvc.usuarios.entity.Usuario;
 import org.rgomez.springcloud.msvc.usuarios.services.IUsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,14 +17,21 @@ import java.util.*;
 public class UsuarioController {
 
     private final IUsuarioService usuarioService;
+    private final ApplicationContext applicationContext;
 
-    public UsuarioController(IUsuarioService usuarioService) {
+    public UsuarioController(IUsuarioService usuarioService, ApplicationContext applicationContext) {
         this.usuarioService = usuarioService;
+        this.applicationContext = applicationContext;
+    }
+
+    @GetMapping("/crash")
+    public void crash() {
+        ((ConfigurableApplicationContext)applicationContext).close();
     }
 
     @GetMapping
-    public List<Usuario> listar() {
-        return usuarioService.listar();
+    public Map<String, List<Usuario>> listar() {
+        return Collections.singletonMap("users", usuarioService.listar());
     }
 
     @GetMapping("/{id}")
