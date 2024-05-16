@@ -19,7 +19,7 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_PASSWORD
-              value: tarah723
+              value: "tarah723"
             - name: POSTGRES_DB
               value: msvc_cursos
           volumeMounts:
@@ -27,6 +27,5 @@ spec:
               name: data-postgres
       volumes:
         - name: data-postgres
-          hostPath:
-            path: /var/lib/postgresql/data
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: postgres-pvc
