@@ -20,9 +20,9 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: msvc-cursos
+                secretKeyRef:
                   key: db_password
+                  name: msvc-cursos
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
