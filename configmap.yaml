@@ -9,6 +9,10 @@ data:
   #db_username: "root"
   #db_password: "tarah723"
   curso_url: "msvc-cursos:8002"
+  # Adicionar configuraciones al properties principal del micro servicio desde el confimap
+  msvc-usuarios.yml: |-
+    config:
+      texto: Configurando ambiente por defecto
 # Forma para evitar crear varios archivos, se puede tener varias configuraciones en un solo .yaml
 ---
 apiVersion: v1
