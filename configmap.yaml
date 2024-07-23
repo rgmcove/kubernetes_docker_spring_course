@@ -13,6 +13,20 @@ data:
   msvc-usuarios.yml: |-
     config:
       texto: Configurando ambiente por defecto
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: dev
+    config:
+      texto: Configurando ambiente de desarrollo
+    ---
+    spring:
+      config:
+        activate:
+          on-profile: prod
+    config:
+      texto: Configurando ambiente de produccion
 # Forma para evitar crear varios archivos, se puede tener varias configuraciones en un solo .yaml
 ---
 apiVersion: v1
