@@ -5,8 +5,10 @@ metadata:
 spec:
   volumeName: mysql-pv
   storageClassName: standard
+  # storageClassName: ""  Aplica para cuando se usa servicio EKS con EFS en aws
   accessModes:
     - ReadWriteOnce
+#    - ReadWriteMany  Aplica para cuando se usa servicio EKS con EFS en aws con varios nodos
   resources:
     requests:
       storage: 2Gi

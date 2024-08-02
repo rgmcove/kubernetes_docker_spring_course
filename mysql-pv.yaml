@@ -7,8 +7,16 @@ spec:
     storage: 2Gi
   volumeMode: Filesystem
   storageClassName: standard
+  # aplica para cuando se usa con servicio aws EKS
+  #storageClassName: ""
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce #Cuando es un solo nodo
+  # aplica para cuando se usa con servicio aws EKS para varios nodos
+   # - ReadWriteMany
   hostPath:
     path: /var/lib/mysql
     type: DirectoryOrCreate
+  # aplica para cuando se usa con servicio aws EKS (EFS)
+#  csi:
+#    driver: efs.csi.aws.com
+#    volumeHandle: Se pone el id del sistema de archivo EFS en aws

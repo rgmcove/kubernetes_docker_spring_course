@@ -7,8 +7,14 @@ spec:
     storage: 2Gi
   volumeMode: Filesystem
   storageClassName: standard
+  # aplica para cuando se usa con servicio aws EKS
+  #storageClassName: ""
   accessModes:
     - ReadWriteOnce
   hostPath:
     path: /var/lib/postgresql/data
     type: DirectoryOrCreate
+  # aplica para cuando se usa con servicio aws EKS (EFS)
+  #  csi:
+  #    driver: efs.csi.aws.com
+  #    volumeHandle: Se pone el id del sistema de archivo EFS en aws
