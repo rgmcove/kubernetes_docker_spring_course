@@ -101,7 +101,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri("http://127.0.0.1:8001/login/oauth2/code/msvc-usuarios-client")
-                .postLogoutRedirectUri("http://127.0.0.1:8001/")
+                .postLogoutRedirectUri("http://127.0.0.1:8001/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("read")
                 .scope("write")
