@@ -12,9 +12,11 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +43,9 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     @Order(1)
@@ -100,8 +105,8 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("http://127.0.0.1:8001/login/oauth2/code/msvc-usuarios-client")
-                .postLogoutRedirectUri("http://127.0.0.1:8001/authorized")
+                .redirectUri(environment.getProperty("LB_USUARIOS_URI") + "/login/oauth2/code/msvc-usuarios-client")
+                .postLogoutRedirectUri(environment.getProperty("LB_USUARIOS_URI") + "/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("read")
                 .scope("write")
