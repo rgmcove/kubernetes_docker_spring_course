@@ -3,8 +3,9 @@ kind: ConfigMap
 metadata:
   name: msvc-usuarios
 data:
-  lb_auth_issuer_uri: "http://127.0.0.1:9000"
-  lb_usuarios_uri: "http://127.0.0.1:8001"
+  # Estas dos url se debe cambiar por la que genere el minikube - por defecto estan 127.0.0.1:puerto
+  lb_auth_issuer_uri: "http://172.21.154.72:30263"
+  lb_usuarios_uri: "http://172.21.154.72:31876"
   port: "8001"
   db_host: "mysql8:3306"
   db_database: "msvc_usuarios"

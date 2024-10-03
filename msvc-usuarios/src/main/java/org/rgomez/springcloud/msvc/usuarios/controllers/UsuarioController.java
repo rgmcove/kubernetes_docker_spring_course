@@ -105,7 +105,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/authorized")
-    public Map<String, Object> authorized(@RequestParam String code) {
+    public Map<String, Object> authorized(@RequestParam(name = "code") String code) {
         return Collections.singletonMap("code", code);
     }
 
