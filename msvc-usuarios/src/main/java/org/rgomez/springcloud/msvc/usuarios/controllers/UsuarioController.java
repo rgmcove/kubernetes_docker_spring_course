@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,13 @@ public class UsuarioController {
     private final IUsuarioService usuarioService;
     private final ApplicationContext applicationContext;
     private final Environment environment;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioController(IUsuarioService usuarioService, ApplicationContext applicationContext, Environment environment) {
+    public UsuarioController(IUsuarioService usuarioService, ApplicationContext applicationContext, Environment environment, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
         this.applicationContext = applicationContext;
         this.environment = environment;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/crash")
@@ -61,6 +64,7 @@ public class UsuarioController {
             return ResponseEntity.badRequest()
                     .body(Collections.singletonMap("mensaje", "Ya existe!!!! un usuario con ese correos electronico"));
         }
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(usuario));
     }
@@ -83,7 +87,7 @@ public class UsuarioController {
             }
             usuarioDB.setNombre(usuario.getNombre());
             usuarioDB.setEmail(usuario.getEmail());
-            usuarioDB.setPassword(usuario.getPassword());
+            usuarioDB.setPassword(passwordEncoder.encode(usuario.getPassword()));
             return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guardar(usuarioDB));
         }
         return ResponseEntity.notFound().build();
