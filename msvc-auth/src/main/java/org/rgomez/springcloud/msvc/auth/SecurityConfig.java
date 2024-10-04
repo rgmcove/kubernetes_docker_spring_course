@@ -106,12 +106,13 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri(environment.getProperty("LB_USUARIOS_URI") + "/login/oauth2/code/msvc-usuarios-client")
-                .postLogoutRedirectUri(environment.getProperty("LB_USUARIOS_URI") + "/authorized")
+                .redirectUri(environment.getProperty("LB_USUARIOS_URI") + "/authorized")
+                //.postLogoutRedirectUri(environment.getProperty("LB_USUARIOS_URI") + "/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope("read")
                 .scope("write")
-                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
 
         return new InMemoryRegisteredClientRepository(oidcClient);
