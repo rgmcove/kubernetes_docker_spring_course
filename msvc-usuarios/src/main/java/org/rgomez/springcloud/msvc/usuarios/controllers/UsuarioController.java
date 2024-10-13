@@ -113,6 +113,15 @@ public class UsuarioController {
         return Collections.singletonMap("code", code);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<?> loginByEmail(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
+        Optional<Usuario> o = usuarioService.porEmail(email);
+        if (o.isPresent()) {
+            return ResponseEntity.ok(o.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     private ResponseEntity<Map<String, String>> validateBinding(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
         result.getFieldErrors().forEach(fieldError -> errores.put(fieldError.getField(), "El campo " + fieldError
