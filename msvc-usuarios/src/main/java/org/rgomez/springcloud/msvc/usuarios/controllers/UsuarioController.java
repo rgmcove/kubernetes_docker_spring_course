@@ -114,7 +114,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<?> loginByEmail(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
+    public ResponseEntity<?> loginByEmail(@RequestParam(name = "email") String email) {
         Optional<Usuario> o = usuarioService.porEmail(email);
         if (o.isPresent()) {
             return ResponseEntity.ok(o.get());
