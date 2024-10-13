@@ -118,7 +118,7 @@ public class SecurityConfig {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("usuarios-client")
                 //.clientSecret("{noop}12345")
-                .clientSecret(passwordEncoder().encode("12345"))
+                .clientSecret(passwordEncoder().encode("1234"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
