@@ -19,7 +19,7 @@ import java.util.Collections;
 public class UsuarioService implements UserDetailsService {
 
     @Autowired
-    private WebClient webClient;
+    private WebClient.Builder webClient;
 
     private Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
@@ -27,14 +27,13 @@ public class UsuarioService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         try {
-            Usuario usuario = webClient.get()
-                    .uri("http://msvc-usuarios:8001/login", uri -> uri.queryParam("email", email).build())
+            Usuario usuario = webClient.build().get()
+                    .uri("http://msvc-usuarios/login", uri -> uri.queryParam("email", email).build())
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .bodyToMono(Usuario.class)
                     .block();
 
-            assert usuario != null;
             log.info("Usuario login: " + usuario.getEmail());
             log.info("Usuario nombre: " + usuario.getNombre());
             log.info("Password: " + usuario.getPassword());
