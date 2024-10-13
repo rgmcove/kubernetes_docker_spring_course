@@ -53,7 +53,7 @@ public class CursoService implements ICursoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Curso> porIdConUsuarios(Long id) {
+    public Optional<Curso> porIdConUsuarios(Long id, String token) {
         Optional<Curso> o = cursoRepository.findById(id);
         if (o.isPresent()) {
             Curso curso = o.get();
@@ -61,7 +61,7 @@ public class CursoService implements ICursoService {
                 List<Long> ids = curso.getCursoUsuarios().stream().map(cu -> cu.getUsuarioId())
                         .collect(Collectors.toList());
 
-                List<Usuario> usuarios = clients.obtenerAlumnosporCurso(ids);
+                List<Usuario> usuarios = clients.obtenerAlumnosporCurso(ids, token);
                 curso.setUsuarios(usuarios);
             }
             return Optional.of(curso);
@@ -71,10 +71,10 @@ public class CursoService implements ICursoService {
 
     @Transactional
     @Override
-    public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+    public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId, String token) {
         Optional<Curso> o = cursoRepository.findById(cursoId);
         if (o.isPresent()) {
-            Usuario usuarioMsvc = clients.detalle(usuario.getId());
+            Usuario usuarioMsvc = clients.detalle(usuario.getId(), token);
 
             Curso curso = o.get();
             CursoUsuario cursoUsuario = new CursoUsuario();
@@ -91,10 +91,10 @@ public class CursoService implements ICursoService {
 
     @Transactional
     @Override
-    public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+    public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId, String token) {
         Optional<Curso> o = cursoRepository.findById(cursoId);
         if (o.isPresent()) {
-            Usuario usuarioNuevoMsvc = clients.crear(usuario);
+            Usuario usuarioNuevoMsvc = clients.crear(usuario, token);
 
             Curso curso = o.get();
             CursoUsuario cursoUsuario = new CursoUsuario();
@@ -110,10 +110,10 @@ public class CursoService implements ICursoService {
 
     @Transactional
     @Override
-    public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+    public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId, String token) {
         Optional<Curso> o = cursoRepository.findById(cursoId);
         if (o.isPresent()) {
-            Usuario usuarioMsvc = clients.detalle(usuario.getId());
+            Usuario usuarioMsvc = clients.detalle(usuario.getId(), token);
 
             Curso curso = o.get();
             CursoUsuario cursoUsuario = new CursoUsuario();
